@@ -1,0 +1,120 @@
+个人开发使用git 的步骤 
+
+		1.选中项目文件夹    命令行输入:cd 文件夹名
+		2.命令行输入: git  init     使用git初始化项目
+		3.可以进行必要的开发
+		4.小模块开发完成,,,,并且没问题,,需要提交
+			git status  查看状态 
+			
+			查看项目文件夹内部是否出现改动
+			git  diff  查看文件的修改内容,,但是不可查看新建的文件 
+
+		5.将文件推送至缓存区域  git add 文件名 
+			文件名是你需要提交的代码文件名..  或者直接git add .    这个命令(git add .)将所有文件进行包含
+
+
+		6.文件已经推送至缓存区域后,, 下一步就是将文件提交到本地仓库   命令行输入:  git commit -m'提交信息(完成什么业务块   比如完成登录注册的业务块)'   将你的修改提交到本地仓库
+
+
+			git log  查看提交日志,,  命令行会显示:
+				author:  提交者的名字 
+				date:  提交的日期 
+				commit: 版本号  
+				.....   以及其它的提交信息
+
+
+			git log --pretty=oneline
+			将log日志,,一条只显示一行,,,只显示版本号和注释信息(一般当我们一天代码提交次数较多时使用这个方式获取日志)
+
+			git  reset --hard 版本号  
+			git reset -hard HEAD^   一个托字符代表一个版本 
+			git reset --hard  HEAD~100   返回上100个版本
+
+			当项目开发的过程中,,,,出现了问题,,,,解决不了,,那么需要回到上一次的代码版本...可以使用回滚  
+
+			在windows版本里  git reset --hard HEAD^  	这个命令会出现 more?  的确认命令行    node 对 git命令的不兼容  使用git 的git base here命令行输入即可  
+
+			或者使用  git reset --hard HEAD~5  在HEAD后边直接跟"~5"   波浪线和数字    即可返回相应的数字版本号  (注意命令行内的版本是按  "最新最高"   的顺序排列)
+
+
+
+-----------------
+	多人系统开发  
+
+		reademe.md   阅读文档  md:markdown文件 
+
+
+		多人协同开发 :
+		 	生成ssh key   添加到github
+
+		 	克隆项目:   git clone url(项目地址)
+		 	开发阶段:   add commit
+		 	提交代码  先拉再推  git pull   ;;;;;  git push 
+
+
+		 分支系统
+
+		 	git branch  显示所在本地分支 
+
+			git checkout 分知名       切换到相应的分支 
+
+			git  checkout -b 分支名    创建并切换到这个分支
+
+
+			本地分支的作用,,,,其实就是为了备份一下,,防止本地开发过程中出现不可逆转的问题   ;;
+			每天开发之前,,先创建一个分支,,切换到该分支上面进行开发(git checkout -b yujiahao),,,,当一天的开发完成之后(html css js scss)  ,,,,切换到主分支(git checkout master),,,,将主分支合并一下子分支的内容(git merge yujiahao),,,,同时在本地删除子分支(git branch -d yujiahao)
+
+
+	项目初始的时候
+
+			创建一个文件夹---> cd 进入该文件夹  ---->  然互git clone url(项目的地址     https地址)-->
+
+			在本地创建一个内部含有内容的master分支  --->创建本地属于自己的分支 check out -b yujiahao --->  开始码农  (html js css)
+
+			->晚上提交  git add ./   ----->  git commit    --->>>git  checkout master ---->  git fetch  --->  git  pull  --->  
+
+			git merge yujiahao --->git push   ---->  git branch -d yujiahao  ----->>回家
+
+
+
+
+	一天的工作流程:
+
+			git fetch (刷新本地的master数据????似乎应该称其为刷新本地master的时间点  事件点)
+
+			git pull  (利用刷新的数据  或者时间点  事件点  将远程仓库的master 内容拉取下来  )
+
+			确保本地的master 内的数据最新  即可利用本地的mater数据  创建本地属于自己的分支  
+			git checkout -b yujiahao 
+			创建本地属于自己的分支 并且已经切换到本地自己的分支 
+
+			然后一天的正常工作 (html css js)
+
+
+			晚上需要将代码提交:::::::
+
+			git add.   将代码推送至自己分支的缓存区
+			git commit   将代码提交自己分支的远程仓库 
+
+			git checkout master 切换到主分支 
+
+			或者再增加一步  保险起见  git fetch   重新刷新master的时间点 事件点
+
+			git pull   拉取远程仓库主分支的内容(以保证本地master的内容最新)
+
+			git merge yujiahao    把yujiahao分支的内容合并到主分支  
+
+			git push  把内容推送到  master的分支上  
+
+
+			git branch -d yujiahao     删除本地分支中的yujiahao分支   这样本地(即文件夹)内只存在一个分支  
+
+
+	第二天来的时候  重新  git fetch (此时本地只有一个分支,,master 直接刷新master)
+
+			git pull  拉取远程仓库主分支的内容 
+
+			git checkout -b yujiahao  创建本地属于自己的分支
+
+
+			.........
